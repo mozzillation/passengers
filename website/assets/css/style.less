@@ -8,7 +8,7 @@
 @red: #FF3502;
 
 @dark: #222222;
-@light: fade(@white, 40);
+@light: fade(@white, 10);
 
 @primary: @red;
 
@@ -28,6 +28,10 @@
 
 // ---
 // ---
+* {
+    box-sizing: border-box;
+}
+
 
 html,
 body {
@@ -75,12 +79,22 @@ body {
         align-content: center;
         align-items: center;
         justify-content: center;
+        flex-direction: column;
         font-family: @mono;
-        font-size: 36px;
         letter-spacing: 5px;
         color: @white;
         mix-blend-mode: add;
         transition: opacity @ease;
+        transition-delay: 0.05s;
+
+        &_text {
+            font-size: 36px;
+        }
+
+        &_subtitle {
+            text-transform: uppercase;
+            opacity: 0.7;
+        }
     }
 
 
@@ -89,10 +103,11 @@ body {
 
         .logo {
             opacity: 0;
+            color: @primary;
         }
 
         .background {
-            transform: translateX(-100vw);
+            transform: translateY(100vh);
         }
     }
 
@@ -112,6 +127,19 @@ body {
     height: 100%;
     max-width: 80vw;
     z-index: 0;
+
+    .passenger {
+        width: 5px;
+        height: 5px;
+        background: @primary;
+        border-radius: 50%;
+        opacity: 1;
+        transition: opacity @ease;
+
+        &.is-visible {
+            opacity: 1;
+        }
+    }
 
 
     .marker {
@@ -148,9 +176,10 @@ body {
             border-radius: 50%;
             transition: background @ease;
 
-
         }
 
+        &.highlight,
+        &.is-active,
         &:hover {
             border-bottom-color: @white;
 
@@ -163,6 +192,9 @@ body {
             }
 
         }
+
+
+
     }
 
     .mapboxgl-popup {
@@ -200,8 +232,48 @@ body {
 }
 
 
+#subsidebar {
+    right: calc(20vw);
+    transform: translateX(20vw);
+    width: 300px;
+    max-width: 20vw;
+    background: @dark;
+    top: 0;
+    bottom: 0;
+    position: fixed;
+    z-index: 999;
+    box-shadow: 0px 0px 100px 10px @dark;
+    padding: 25px;
+    letter-spacing: 1px;
+    line-height: 24px;
+    transition: transform @ease;
+    overflow: scroll;
+
+    &.is-active {
+        transform: translateX(0vw);
+    }
+
+    h1 {
+        color: @primary;
+        border-bottom: 1px solid @primary;
+        padding-bottom: 10px;
+        font-size: 16px;
+        font-weight: normal;
+        margin: 0;
+    }
+
+    li {
+        list-style: none;
+        font-family: @mono;
+        color: @white;
+        border-bottom: 1px solid @light;
+        padding: 10px 0;
+    }
+}
+
+
 #sidebar {
-    box-shadow: 0px 0px 100px @dark;
+    box-shadow: 0px 0px 100px 10px fade(@black, 30);
     position: fixed;
     top: 0;
     bottom: 0;
@@ -209,6 +281,7 @@ body {
     background: @dark;
     overflow: hidden;
     width: 20vw;
+    z-index: 1000;
 
     .places {
         height: 100vh;
@@ -216,13 +289,41 @@ body {
         position: relative;
 
         .place {
-            padding: 25px 0px 25px 25px;
+            padding: 25px;
             letter-spacing: 1px;
             line-height: 24px;
             position: relative;
+            transition: opacity @ease,
+                transform @ease;
+            cursor: pointer;
+
+            &:before {
+                position: absolute;
+                top: 30px;
+                left: 8px;
+                width: 20px;
+                height: 20px;
+                background: @primary;
+                content: ' ';
+                border-radius: 50%;
+                border: 6px solid @dark;
+                transform: scale(0);
+                transition: transform @ease;
+
+            }
+
+            &.is-active {
+                .place_thumb {
+                    background: @primary  !important;
+                }
+
+                .place_address {
+                    color: @primary  !important;
+                }
+            }
 
             &:after {
-                background: linear-gradient(to right, fade(@light, 20), transparent);
+                background: radial-gradient(to top right, fade(@light, 20), transparent);
                 transition: opacity @ease, transform @ease;
                 content: ' ';
                 left: 0;
@@ -232,30 +333,45 @@ body {
                 position: absolute;
                 width: 100%;
                 opacity: 0;
-                transform: translateX(-100%);
+                z-index: 1;
             }
 
             &.highlight,
             &:hover {
+
+                .place_address {
+                    color: @white;
+                }
+
+                .place_thumb {
+                    background-color: @white;
+                }
+
                 &:after {
-                    opacity: 1;
                     transform: translate(0);
+                    transition: opacity @ease, transform @ease;
                 }
             }
 
             &_thumb {
                 width: 100%;
-                height: calc(20vw - 50px);
-                background: @white;
+                height: 200px;
+                background: @dark;
+                transition: background @ease;
             }
 
             &_address {
                 padding: 10px 0 0 0;
+                color: @light;
+                transition: color @ease;
 
             }
 
             &_time {
-                color: @light;
+                color: fade(@white, 10);
+                border-bottom: 1px solid fade(@light, 10);
+                padding-bottom: 30px;
+
             }
 
         }

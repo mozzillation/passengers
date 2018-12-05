@@ -1,25 +1,15 @@
 {
-    type: 'FeatureCollection',
-    features: [{
-            type: 'Feature',
-            geometry: {
-                type: 'Point',
-                coordinates: [9.2154658, 45.4709737]
+    "type": "Places",
+    "places": [{
+            "type": "Place",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [9.2154658, 45.4709737]
             },
-            properties: {
-                description: 'Via Gustavo Modena',
-                id: '#gustavoModena'
-            }
-        },
-        {
-            type: 'Feature',
-            geometry: {
-                type: 'Point',
-                coordinates: [10.2154658, 45.4709737]
-            },
-            properties: {
-                description: 'Via Gustavo Modena',
-                id: '#gustavoModena'
+            "properties": {
+                "description": "Via Gustavo Modena",
+                "id": "gustavoModena",
+                "timestamp": "2018/12/04"
             }
         }
     ]

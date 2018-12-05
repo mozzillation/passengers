@@ -1,0 +1,40 @@
+{
+    "type": "FeatureCollection",
+    "name": "Via Gustavo Modena",
+    "timestamp": "20181220",
+    "coordinates": [9.2154658, 45.4709737],
+    "passengers": [{
+            "mac": "xx:xx:xx:xx"
+        }, {
+            "mac": "xx:xx:xx:xx"
+        }, {
+            "mac": "xx:xx:xx:xx"
+        }, {
+            "mac": "xx:xx:xx:xx"
+        }, {
+            "mac": "xx:xx:xx:xx"
+        }, {
+            "mac": "xx:xx:xx:xx"
+        }, {
+            "mac": "xx:xx:xx:xx"
+        }, {
+            "mac": "xx:xx:xx:xx"
+        }, {
+            "mac": "xx:xx:xx:xx"
+        }, {
+            "mac": "xx:xx:xx:xx"
+        }, {
+            "mac": "xx:xx:xx:xx"
+        }, {
+            "mac": "xx:xx:xx:xx"
+        }, {
+            "mac": "xx:xx:xx:xx"
+        }, {
+            "mac": "xx:xx:xx:xx"
+        }, {
+            "mac": "xx:xx:xx:xx"
+        }, {
+            "mac": "xx:xx:xx:xx"
+        }
+    ]
+}
