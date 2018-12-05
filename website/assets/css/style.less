@@ -3,13 +3,28 @@
 @black: #000000;
 @white: #FFFFFF;
 
+@purple: #9D77FC;
+@blue: #1018FF;
+@red: #FF3502;
+
 @dark: #222222;
+@light: fade(@white, 40);
 
-@primary: #5258E2;
+@primary: @red;
 
-@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,600');
+@import url('https://fonts.googleapis.com/css?family=Space+Mono|IBM+Plex+Sans');
 
+@mono: 'Space Mono', monospace;
 @font: 'IBM Plex Sans', sans-serif;
+
+
+@desktop: ~ "only screen and (min-width: 587px)";
+@mobile: ~ "only screen and (max-width: 586px)";
+
+
+@seconds: 1s;
+@ease: @seconds ~ ' cubic-bezier(0,1,0,1)';
+
 
 // ---
 // ---
@@ -30,6 +45,60 @@ body {
     font-family: @font;
 }
 
+
+#preload {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000000;
+
+
+    .logo,
+    .background {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+
+    .background {
+        background: @primary;
+        transition: transform @ease;
+    }
+
+    .logo {
+        text-align: center;
+        display: flex;
+        align-content: center;
+        align-items: center;
+        justify-content: center;
+        font-family: @mono;
+        font-size: 36px;
+        letter-spacing: 5px;
+        color: @white;
+        mix-blend-mode: add;
+        transition: opacity @ease;
+    }
+
+
+    &.is-ready {
+        pointer-events: none;
+
+        .logo {
+            opacity: 0;
+        }
+
+        .background {
+            transform: translateX(-100vw);
+        }
+    }
+
+
+}
+
 // ---
 // ---
 
@@ -42,6 +111,92 @@ body {
 #map {
     height: 100%;
     max-width: 80vw;
+    z-index: 0;
+
+
+    .marker {
+        width: 0;
+        height: 0;
+        border: 12px solid transparent;
+        border-bottom-color: @dark;
+        position: relative;
+        top: -12px;
+        cursor: pointer;
+        transition: border @ease;
+        z-index: 10;
+
+        &:before {
+            content: '';
+            position: absolute;
+            left: -12px;
+            top: 12px;
+            width: 0;
+            height: 0;
+            border: 12px solid transparent;
+            border-top-color: @dark;
+            transition: border @ease;
+        }
+
+        &:after {
+            position: absolute;
+            content: '';
+            top: 8px;
+            left: -4px;
+            width: 8px;
+            height: 8px;
+            background: @white;
+            border-radius: 50%;
+            transition: background @ease;
+
+
+        }
+
+        &:hover {
+            border-bottom-color: @white;
+
+            &:before {
+                border-top-color: @white;
+            }
+
+            &:after {
+                background: @dark;
+            }
+
+        }
+    }
+
+    .mapboxgl-popup {
+        max-width: 200px;
+        padding: 15px;
+        background: @dark;
+        z-index: 1;
+
+        button {
+            display: none;
+        }
+
+        &-tip {
+            display: none;
+        }
+
+        &-content {
+            text-align: center;
+            text-transform: uppercase;
+            background: transparent;
+            font-size: 12px;
+            letter-spacing: 1px;
+
+            font-family: @font;
+            padding: 0;
+
+            p {
+                margin: 0;
+                padding: 0;
+            }
+        }
+
+    }
+
 }
 
 
@@ -51,12 +206,59 @@ body {
     top: 0;
     bottom: 0;
     right: 0;
+    background: @dark;
     overflow: hidden;
     width: 20vw;
 
     .places {
         height: 100vh;
         width: calc(20vw - 50px);
+        position: relative;
+
+        .place {
+            padding: 25px 0px 25px 25px;
+            letter-spacing: 1px;
+            line-height: 24px;
+            position: relative;
+
+            &:after {
+                background: linear-gradient(to right, fade(@light, 20), transparent);
+                transition: opacity @ease, transform @ease;
+                content: ' ';
+                left: 0;
+                top: 0;
+                bottom: 0;
+                right: 0;
+                position: absolute;
+                width: 100%;
+                opacity: 0;
+                transform: translateX(-100%);
+            }
+
+            &.highlight,
+            &:hover {
+                &:after {
+                    opacity: 1;
+                    transform: translate(0);
+                }
+            }
+
+            &_thumb {
+                width: 100%;
+                height: calc(20vw - 50px);
+                background: @white;
+            }
+
+            &_address {
+                padding: 10px 0 0 0;
+
+            }
+
+            &_time {
+                color: @light;
+            }
+
+        }
 
     }
 }
@@ -69,12 +271,12 @@ nav {
     align-items: center;
     justify-content: flex-start;
     padding: 0px 25px;
-
+    font-family: @mono;
     transform: rotate(90deg) translateY(calc(-20vw + 50PX));
     transform-origin: bottom left;
     position: absolute;
     margin: -50px 0 0 0;
-    background: @primary;
+    background: @dark;
     height: 50px;
     display: flex;
 
@@ -84,7 +286,7 @@ nav {
         text-transform: uppercase;
         letter-spacing: 2px;
         font-size: 14px;
-        color: fade(@white, 40);
+        color: @light;
 
         &.title {
             color: @white;
