@@ -16,6 +16,8 @@ var preload = $("#preload"),
 
 
 
+
+
 function loadData() {
 
     $.getJSON("./data/main.json", function (json) {
@@ -154,4 +156,9 @@ $(document).ready(function () {
     //    animateLogo();    
 
     initMap();
+
+    $('.project, #project').click(function () {
+        $('#project').toggleClass("is-visible");
+
+    })
 });
